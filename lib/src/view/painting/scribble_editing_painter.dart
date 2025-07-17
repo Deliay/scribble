@@ -35,8 +35,12 @@ class ScribbleEditingPainter extends CustomPainter with SketchLinePathMixin {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
-
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.25 * state.scaleFactor
+      ..strokeJoin = StrokeJoin.round
+      ..filterQuality = FilterQuality.low
+      ..isAntiAlias = false;
     final activeLine = state.map(
       drawing: (s) => s.activeLine,
       erasing: (_) => null,
