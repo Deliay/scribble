@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:scribble/scribble.dart';
 import 'package:scribble/src/view/painting/sketch_line_path_mixin.dart';
@@ -23,7 +24,7 @@ class ScribblePainter extends CustomPainter with SketchLinePathMixin {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..style = PaintingStyle.fill;
-
+    final start = DateTime.now().toUtc().millisecondsSinceEpoch;
     for (var i = 0; i < sketch.lines.length; ++i) {
       final path = getPathForLine(
         sketch.lines[i],
@@ -35,6 +36,8 @@ class ScribblePainter extends CustomPainter with SketchLinePathMixin {
       paint.color = Color(sketch.lines[i].color);
       canvas.drawPath(path, paint);
     }
+    final end = DateTime.now().toUtc().millisecondsSinceEpoch;
+    print("redraw cost: ${end - start}ms");
   }
 
   @override
